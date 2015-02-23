@@ -14,21 +14,35 @@ public class Hash {
 
     public static String md5(String input) throws UnsupportedEncodingException, NoSuchAlgorithmException {
 
-        byte[] bytesOfMessage = input.getBytes("UTF-8");
-
-        MessageDigest digestion = MessageDigest.getInstance("MD5");
-        byte[] hash = digestion.digest(bytesOfMessage);
+        byte[] hash = digest(input, "MD5");
 
         return exportHash(hash);
 
     }
 
-    public static String sha512(String input){
-        throw new NotImplementedException();
+    public static String sha256(String input) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+
+        byte[] hash = digest(input, "SHA-256");
+
+        return exportHash(hash);
+
     }
 
-    public static String sha256(String input){
-        throw new NotImplementedException();
+    public static String sha512(String input) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+
+        byte[] hash = digest(input, "SHA-512");
+
+        return exportHash(hash);
+
+    }
+
+    private static byte[] digest(String input, String digestionName) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+
+        byte[] bytesOfMessage = input.getBytes("UTF-8");
+
+        MessageDigest digestion = MessageDigest.getInstance(digestionName);
+        return digestion.digest(bytesOfMessage);
+
     }
 
     private static String exportHash(byte[] binary){
