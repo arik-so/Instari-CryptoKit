@@ -20,7 +20,7 @@ public class JSONTest {
     }
 
     @Test
-    public void testJsonToDictionary() throws Exception {
+    public void testJSONToDictionary() throws Exception {
 
         String json = "{\"abc\":\"def\",\"msn\":\"bc\"}";
         JSONObject dictionary = JSON.jsonToDictionary(json);
