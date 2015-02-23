@@ -7,6 +7,8 @@ import org.apache.commons.codec.DecoderException;
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -54,11 +56,20 @@ public class AES {
 
     }
 
-    public static String decrypt(String data, String key, String initializationVector){ // accepts a base64-encoded string
+    public static String decrypt(String base64Data, String key, String initializationVector) throws DecoderException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException, IOException, BadPaddingException, IllegalBlockSizeException { // accepts a base64-encoded string
 
         TyrannyOverride.overrideTyranny();
 
-        return null;
+        SecretKeySpec aesKeySpec = new SecretKeySpec(HexBinary.hexToBinary(key), "AES");
+        IvParameterSpec ivSpec = new IvParameterSpec(HexBinary.hexToBinary(initializationVector));
+
+        // Encrypt cipher
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        cipher.init(Cipher.DECRYPT_MODE, aesKeySpec, ivSpec);
+        byte[] original = cipher.doFinal(Base64.decode(base64Data));
+
+        return new String(original, Charset.forName("UTF-8"));
+
     }
 
 

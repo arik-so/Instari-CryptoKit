@@ -34,13 +34,20 @@ public class AESTest {
         String expectedOutput = "wL99DQ1wPkIDYIYIRR13Vw==";
 
         String actualOutput = AES.encrypt(data, key, initializationVector);
-
-        System.out.println("Actual output: "+actualOutput);
+        assertEquals("AES encryption works", expectedOutput, actualOutput);
 
     }
 
     @Test
     public void testDecrypt() throws Exception {
+
+        String key = "41ef3f238f5c2438abd342c71fb0bb66aeee835b20bfcde24080811d51387c22";
+        String initializationVector = "984f31a9f7150e4ea8982e31e715e30d";
+        String encrypted = "wL99DQ1wPkIDYIYIRR13Vw==";
+        String expectedOutput = "Hello!";
+
+        String actualOutput = AES.decrypt(encrypted, key, initializationVector);
+        assertEquals("AES encryption works", expectedOutput, actualOutput);
 
     }
 }
