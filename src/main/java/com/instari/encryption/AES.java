@@ -63,7 +63,7 @@ public class AES {
         SecretKeySpec aesKeySpec = new SecretKeySpec(HexBinary.hexToBinary(key), "AES");
         IvParameterSpec ivSpec = new IvParameterSpec(HexBinary.hexToBinary(initializationVector));
 
-        // Encrypt cipher
+        // Decrypt cipher
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
         cipher.init(Cipher.DECRYPT_MODE, aesKeySpec, ivSpec);
         byte[] original = cipher.doFinal(Base64.decode(base64Data));
