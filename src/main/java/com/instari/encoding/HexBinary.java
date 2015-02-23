@@ -1,5 +1,7 @@
 package com.instari.encoding;
 
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.binary.Hex;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
@@ -8,11 +10,11 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 public class HexBinary {
 
     public static String binaryToHex(byte[] binary){
-        throw new NotImplementedException();
+        return Hex.encodeHexString(binary);
     }
 
-    public static byte[] hexToBinary(String hex){
-        throw new NotImplementedException();
+    public static byte[] hexToBinary(String hex) throws DecoderException {
+        return Hex.decodeHex(hex.toCharArray());
     }
 
 }
