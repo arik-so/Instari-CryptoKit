@@ -15,6 +15,10 @@ public class Base64 {
     private static BASE64Encoder encoder = new BASE64Encoder();
     private static BASE64Decoder decoder = new BASE64Decoder();
 
+    public static String encode(String input) {
+        return encode(input.getBytes(Charset.forName("UTF-8")));
+    }
+
     public static String encode(byte[] binary) {
         return encoder.encode(binary);
     }

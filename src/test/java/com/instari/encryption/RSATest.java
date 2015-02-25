@@ -1,5 +1,6 @@
 package com.instari.encryption;
 
+import com.instari.encoding.Base64;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -8,6 +9,11 @@ public class RSATest {
 
     @Test
     public void testGenerateKeyPair() throws Exception {
+
+        RSA.RSAKeyPair keyPair = RSA.generateKeyPair();
+
+        assertEquals("Private key PKCS#1 conformity (length)", 1675, keyPair.getPrivateKey().length(), 10);
+        assertEquals("Public key PKCS#1/PKCS#8 conformity (length)", 450, keyPair.getPublicKey().length(), 10);
 
     }
 
