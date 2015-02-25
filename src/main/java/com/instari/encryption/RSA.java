@@ -27,7 +27,7 @@ public class RSA {
 
     public static RSAKeyPair generateKeyPair() throws NoSuchAlgorithmException, IOException, NoSuchProviderException {
 
-        return generateKeyPair(2048);
+        return generateKeyPair(4096);
         // return null;
 
     }
