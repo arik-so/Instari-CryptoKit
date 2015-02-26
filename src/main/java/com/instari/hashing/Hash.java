@@ -1,7 +1,6 @@
 package com.instari.hashing;
 
 import com.instari.encoding.HexBinary;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;

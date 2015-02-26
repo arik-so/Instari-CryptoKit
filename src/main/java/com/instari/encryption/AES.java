@@ -2,7 +2,7 @@ package com.instari.encryption;
 
 import com.instari.encoding.Base64;
 import com.instari.encoding.HexBinary;
-import org.apache.commons.codec.DecoderException;
+import com.instari.surrogate.apache.commons.codec.DecoderException;
 
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;

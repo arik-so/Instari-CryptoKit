@@ -2,10 +2,9 @@ package com.instari.encryption;
 
 import com.instari.encoding.Base64;
 import com.instari.hashing.Hash;
-import org.bouncycastle.asn1.ASN1Sequence;
-import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
-import org.bouncycastle.asn1.pkcs.RSAPrivateKeyStructure;
-import sun.security.rsa.RSAKeyPairGenerator;
+import com.instari.surrogate.bouncycastle.asn1.ASN1Sequence;
+import com.instari.surrogate.bouncycastle.asn1.pkcs.PrivateKeyInfo;
+import com.instari.surrogate.bouncycastle.asn1.pkcs.RSAPrivateKeyStructure;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;

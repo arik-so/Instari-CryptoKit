@@ -1,8 +1,7 @@
 package com.instari.encoding;
 
-import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.binary.Hex;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import com.instari.surrogate.apache.commons.codec.DecoderException;
+import com.instari.surrogate.apache.commons.codec.binary.Hex;
 
 /**
  * Created by arik on 2/23/15.

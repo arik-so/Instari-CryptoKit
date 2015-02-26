@@ -29,4 +29,5 @@ apply plugin: 'com.github.johnrengelman.shadow'
 
 shadowJar {
     relocate 'org.apache.commons', 'com.instari.surrogate.apache.commons'
+    relocate 'org.bouncycastle', 'com.instari.surrogate.bouncycastle'
 }

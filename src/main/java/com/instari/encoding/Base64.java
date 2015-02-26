@@ -18,13 +18,13 @@ public class Base64 {
 
     public static String encode(byte[] binary) {
 
-        return org.apache.commons.codec.binary.Base64.encodeBase64String(binary);
+        return com.instari.surrogate.apache.commons.codec.binary.Base64.encodeBase64String(binary);
 
     }
 
     public static byte[] decode(String base64) throws IOException {
 
-        return org.apache.commons.codec.binary.Base64.decodeBase64(base64);
+        return com.instari.surrogate.apache.commons.codec.binary.Base64.decodeBase64(base64);
 
     }
 
