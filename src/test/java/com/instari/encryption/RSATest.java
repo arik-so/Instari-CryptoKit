@@ -75,7 +75,7 @@ public class RSATest {
     @Test
     public void testSigning() throws Exception {
 
-        RSA.RSAKeyPair keyPair = RSA.generateKeyPair(2048);
+        RSA.RSAKeyPair keyPair = RSA.generateKeyPair(4096);
 
         String data = "World?!";
         String encryptedData = RSA.encryptWithPrivate(data, keyPair.getPrivateKey());
@@ -83,15 +83,10 @@ public class RSATest {
 
         assertEquals("RSA two-way signing works", data, decryptedData);
 
-    }
+        String signature = RSA.sign(data, keyPair.getPrivateKey());
+        boolean validity = RSA.isSignatureValid(data, signature, keyPair.getPublicKey());
 
-    @Test
-    public void testSign() throws Exception {
-
-    }
-
-    @Test
-    public void testIsSignatureValid() throws Exception {
+        assertTrue("Signature verification works", validity);
 
     }
 }
