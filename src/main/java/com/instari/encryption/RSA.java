@@ -111,23 +111,63 @@ public class RSA {
 
     }
 
-    public static String encryptWithPrivate(String data, String privateKey){
-        return null;
+    public static String encryptWithPrivate(String data, String privateKey) throws IOException, InvalidKeySpecException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+
+        // initialize
+        byte[] byteData = data.getBytes(); // convert string to byte array
+        PrivateKey keyObject = extractPrivateKey(privateKey);
+
+        // encrypt
+        Cipher cipher = null; // create conversion processing object
+        try {
+            cipher = Cipher.getInstance(CIPHER_ALGORITHM);
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        cipher.init(Cipher.ENCRYPT_MODE, keyObject); // initialize object's mode and key
+        byte[] encryptedByteData = cipher.doFinal(byteData); // use object for encryption
+
+        // return
+        return Base64.encode(encryptedByteData);
+
     }
 
-    public static String decryptWithPublic(String data, String publicKey){
-        return null;
+    public static String decryptWithPublic(String encryptedData, String publicKey) throws IOException, InvalidKeySpecException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+
+        // initialize
+        byte[] encryptedByteData = Base64.decode(encryptedData);
+        PublicKey keyObject = extractPublicKey(publicKey);
+
+        // encrypt
+        Cipher cipher = null; // create conversion processing object
+        try {
+            cipher = Cipher.getInstance(CIPHER_ALGORITHM);
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        cipher.init(Cipher.DECRYPT_MODE, keyObject); // initialize object's mode and key
+        byte[] byteData = cipher.doFinal(encryptedByteData); // use object for encryption
+
+        // return
+        return new String(byteData);
+
     }
 
-    public static String sign(String data, String privateKey) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    public static String sign(String data, String privateKey) throws IOException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidKeySpecException, InvalidKeyException {
         String hash = signatureHash(data);
         return encryptWithPrivate(hash, privateKey);
     }
 
-    public static boolean isSignatureValid(String data, String signature, String publicKey) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    public static boolean isSignatureValid(String data, String signature, String publicKey) throws IOException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidKeySpecException, InvalidKeyException {
+
         String hash = signatureHash(data);
         String foundValue = decryptWithPublic(signature, publicKey);
         return hash.equals(foundValue);
+
     }
 
     private static PublicKey extractPublicKey(String publicKey) throws IOException, InvalidKeySpecException {

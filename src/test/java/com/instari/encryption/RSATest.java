@@ -75,7 +75,13 @@ public class RSATest {
     @Test
     public void testSigning() throws Exception {
 
+        RSA.RSAKeyPair keyPair = RSA.generateKeyPair(2048);
 
+        String data = "World?!";
+        String encryptedData = RSA.encryptWithPrivate(data, keyPair.getPrivateKey());
+        String decryptedData = RSA.decryptWithPublic(encryptedData, keyPair.getPublicKey());
+
+        assertEquals("RSA two-way signing works", data, decryptedData);
 
     }
 
