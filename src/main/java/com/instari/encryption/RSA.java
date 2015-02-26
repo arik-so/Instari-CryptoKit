@@ -211,7 +211,7 @@ public class RSA {
         return Hash.sha512(input);
     }
 
-    static class RSAKeyPair{
+    public static class RSAKeyPair{
 
         private String privateKey;
         private String publicKey;

@@ -12,33 +12,53 @@ import java.security.NoSuchAlgorithmException;
  */
 public class Hash {
 
-    public static String md5(String input) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    public static String md5(String input) {
 
-        byte[] hash = digest(input, "MD5");
-
-        return exportHash(hash);
-
-    }
-
-    public static String sha256(String input) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-
-        byte[] hash = digest(input, "SHA-256");
+        byte[] hash = new byte[0];
+        try {
+            hash = digest(input, "MD5");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
 
         return exportHash(hash);
 
     }
 
-    public static String sha512(String input) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    public static String sha256(String input) {
 
-        byte[] hash = digest(input, "SHA-512");
+        byte[] hash = new byte[0];
+        try {
+            hash = digest(input, "SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
 
         return exportHash(hash);
 
     }
 
-    private static byte[] digest(String input, String digestionName) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    public static String sha512(String input) {
 
-        byte[] bytesOfMessage = input.getBytes("UTF-8");
+        byte[] hash = new byte[0];
+        try {
+            hash = digest(input, "SHA-512");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        return exportHash(hash);
+
+    }
+
+    private static byte[] digest(String input, String digestionName) throws NoSuchAlgorithmException {
+
+        byte[] bytesOfMessage = new byte[0];
+        try {
+            bytesOfMessage = input.getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
         MessageDigest digestion = MessageDigest.getInstance(digestionName);
         return digestion.digest(bytesOfMessage);
