@@ -152,15 +152,9 @@ public class RSA {
         String filteredKey = privateKey.replaceFirst(PRIVATE_KEY_PREFIX, "").replaceFirst(PRIVATE_KEY_SUFFIX, "");
         byte[] privateKeyBytes = Base64.decode(filteredKey);
 
-
-        // PrivateKeyInfo pki = PrivateKeyInfo.getInstance(privateKeyBytes);
-
-        // PKCS1EncodedKeySpec
-
-        // byte [] asn1PrivateKeyBytes = org.apache.commons.codec.binary.Base64.decodeBase64(filteredKey.getBytes("US-ASCII"));
-        byte [] asn1PrivateKeyBytes = Base64.decode(filteredKey);
-        RSAPrivateKeyStructure asn1PrivKey = new RSAPrivateKeyStructure((ASN1Sequence) ASN1Sequence.fromByteArray(asn1PrivateKeyBytes));
+        RSAPrivateKeyStructure asn1PrivKey = new RSAPrivateKeyStructure((ASN1Sequence) ASN1Sequence.fromByteArray(privateKeyBytes));
         RSAPrivateKeySpec rsaPrivKeySpec = new RSAPrivateKeySpec(asn1PrivKey.getModulus(), asn1PrivKey.getPrivateExponent());
+
         KeyFactory kf = null;
         try {
             kf = KeyFactory.getInstance(ALGORITHM);
@@ -168,20 +162,8 @@ public class RSA {
             e.printStackTrace();
             return null; // should never happen
         }
+
         return kf.generatePrivate(rsaPrivKeySpec);
-
-
-
-
-        /*PrivateKey keyObject = null;
-        try {
-            keyObject = KeyFactory.getInstance(ALGORITHM).generatePrivate(new PKCS8EncodedKeySpec(privateKeyBytes));
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            return null;
-        }
-
-        return keyObject;*/
 
     }
 
