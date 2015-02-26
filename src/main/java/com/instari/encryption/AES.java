@@ -18,9 +18,18 @@ import java.security.NoSuchAlgorithmException;
  */
 public class AES {
 
-    public static String generateInitializationVector() throws NoSuchAlgorithmException { // 128 bits or 32 bytes
+    private static final String ALGORITHM = "AES";
+    private static final String CIPHER_ALGORITHM = "AES/CBC/PKCS5Padding";
 
-        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+    public static String generateInitializationVector() { // 128 bits or 32 bytes
+
+        KeyGenerator keyGen = null;
+        try {
+            keyGen = KeyGenerator.getInstance(ALGORITHM);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null; // should never happen due to fixed algorithm
+        }
         keyGen.init(128);
         SecretKey secretKey = keyGen.generateKey();
 
@@ -29,9 +38,15 @@ public class AES {
 
     }
 
-    public static String generateKey() throws NoSuchAlgorithmException { // 256 bits or 64 bytes
+    public static String generateKey() { // 256 bits or 64 bytes
 
-        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+        KeyGenerator keyGen = null;
+        try {
+            keyGen = KeyGenerator.getInstance(ALGORITHM);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null; // should never happen due to fixed algorithm
+        }
         keyGen.init(256);
         SecretKey secretKey = keyGen.generateKey();
 
@@ -40,15 +55,21 @@ public class AES {
 
     }
 
-    public static String encrypt(String data, String key, String initializationVector) throws NoSuchPaddingException, NoSuchAlgorithmException, DecoderException, InvalidKeyException, InvalidAlgorithmParameterException, BadPaddingException, IllegalBlockSizeException { // returns a base64-encoded string
+    public static String encrypt(String data, String key, String initializationVector) throws DecoderException, InvalidKeyException, InvalidAlgorithmParameterException, BadPaddingException, IllegalBlockSizeException { // returns a base64-encoded string
 
         TyrannyOverride.overrideTyranny();
 
-        SecretKeySpec aesKeySpec = new SecretKeySpec(HexBinary.hexToBinary(key), "AES");
+        SecretKeySpec aesKeySpec = new SecretKeySpec(HexBinary.hexToBinary(key), ALGORITHM);
         IvParameterSpec ivSpec = new IvParameterSpec(HexBinary.hexToBinary(initializationVector));
 
         // Encrypt cipher
-        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        Cipher cipher = null;
+        try {
+            cipher = Cipher.getInstance(CIPHER_ALGORITHM);
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
+            e.printStackTrace();
+            return null; // should never happen due to fixed cipher
+        }
         cipher.init(Cipher.ENCRYPT_MODE, aesKeySpec, ivSpec);
         byte[] encrypted = cipher.doFinal(data.getBytes());
 
@@ -56,15 +77,21 @@ public class AES {
 
     }
 
-    public static String decrypt(String base64Data, String key, String initializationVector) throws DecoderException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException, IOException, BadPaddingException, IllegalBlockSizeException { // accepts a base64-encoded string
+    public static String decrypt(String base64Data, String key, String initializationVector) throws DecoderException, InvalidAlgorithmParameterException, InvalidKeyException, IOException, BadPaddingException, IllegalBlockSizeException { // accepts a base64-encoded string
 
         TyrannyOverride.overrideTyranny();
 
-        SecretKeySpec aesKeySpec = new SecretKeySpec(HexBinary.hexToBinary(key), "AES");
+        SecretKeySpec aesKeySpec = new SecretKeySpec(HexBinary.hexToBinary(key), ALGORITHM);
         IvParameterSpec ivSpec = new IvParameterSpec(HexBinary.hexToBinary(initializationVector));
 
         // Decrypt cipher
-        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        Cipher cipher = null;
+        try {
+            cipher = Cipher.getInstance(CIPHER_ALGORITHM);
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
+            e.printStackTrace();
+            return null; // should never happen due to fixed cipher
+        }
         cipher.init(Cipher.DECRYPT_MODE, aesKeySpec, ivSpec);
         byte[] original = cipher.doFinal(Base64.decode(base64Data));
 
