@@ -12,13 +12,13 @@ public class RSATest {
 
         RSA.RSAKeyPair keyPair = RSA.generateKeyPair(2048);
 
-        assertEquals("Private key PKCS#1 conformity (length)", 1675, keyPair.getPrivateKey().length(), 10);
+        assertEquals("Private key PKCS#1 conformity (length)", 1675, keyPair.getPrivateKey().length(), 30);
         assertEquals("Public key PKCS#1/PKCS#8 conformity (length)", 450, keyPair.getPublicKey().length(), 10);
 
     }
 
     @Test
-    public void testEncryptWithPublic() throws Exception {
+    public void testEncryption() throws Exception {
 
         String doubleBase64PublicKey = "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FR\n" +
                 "OEFNSUlCQ2dLQ0FRRUFoN3hNc0NwaTFXT1d5RysrcFd1N2xud3c1eWRsemhlZQpscjNIWkJLd0kx\n" +
@@ -68,21 +68,14 @@ public class RSATest {
 
         String decryptedData = RSA.decryptWithPrivate(encryptedData, privateKey);
 
+        assertEquals("RSA two-way encryption works", data, decryptedData);
 
     }
 
     @Test
-    public void testDecryptWithPrivate() throws Exception {
+    public void testSigning() throws Exception {
 
-    }
 
-    @Test
-    public void testEncryptWithPrivate() throws Exception {
-
-    }
-
-    @Test
-    public void testDecryptWithPublic() throws Exception {
 
     }
 
