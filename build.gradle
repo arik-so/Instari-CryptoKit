@@ -26,3 +26,7 @@ buildscript {
 }
 
 apply plugin: 'com.github.johnrengelman.shadow'
+
+shadowJar {
+    relocate 'org.apache.commons', 'com.instari.surrogate.apache.commons'
+}
