@@ -1,9 +1,5 @@
 package com.instari.encoding;
 
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import java.io.IOException;
 import java.nio.charset.Charset;
 
@@ -12,19 +8,24 @@ import java.nio.charset.Charset;
  */
 public class Base64 {
 
-    private static BASE64Encoder encoder = new BASE64Encoder();
-    private static BASE64Decoder decoder = new BASE64Decoder();
-
     public static String encode(String input) {
-        return encode(input.getBytes(Charset.forName("UTF-8")));
+
+        Charset utf8Charset = Charset.forName("UTF-8");
+
+        return encode(input.getBytes(utf8Charset));
+
     }
 
     public static String encode(byte[] binary) {
-        return encoder.encode(binary);
+
+        return org.apache.commons.codec.binary.Base64.encodeBase64String(binary);
+
     }
 
     public static byte[] decode(String base64) throws IOException {
-        return decoder.decodeBuffer(base64);
+
+        return org.apache.commons.codec.binary.Base64.decodeBase64(base64);
+
     }
 
 }
