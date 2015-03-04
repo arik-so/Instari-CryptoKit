@@ -27,10 +27,10 @@ public class RSA {
     private static final String ALGORITHM = "RSA";
     private static final String CIPHER_ALGORITHM = "RSA/ECB/PKCS1Padding";
 
-    private static final String PRIVATE_KEY_PREFIX = "-----BEGIN RSA PRIVATE KEY-----\n";
+    private static final String PRIVATE_KEY_PREFIX = "-----BEGIN RSA PRIVATE KEY-----";
     private static final String PRIVATE_KEY_SUFFIX = "\n-----END RSA PRIVATE KEY-----\n";
 
-    private static final String PUBLIC_KEY_PREFIX = "-----BEGIN PUBLIC KEY-----\n";
+    private static final String PUBLIC_KEY_PREFIX = "-----BEGIN PUBLIC KEY-----";
     private static final String PUBLIC_KEY_SUFFIX = "\n-----END PUBLIC KEY-----\n";
 
     public static RSAKeyPair generateKeyPair() throws NoSuchAlgorithmException, IOException, NoSuchProviderException {
@@ -57,8 +57,16 @@ public class RSA {
         RSAPrivateKeyStructure cryptographyStandard1PrivateKey = RSAPrivateKeyStructure.getInstance(pki.getPrivateKey());
         byte[] cryptographyStandard1PrivateKeyBytes = cryptographyStandard1PrivateKey.getEncoded();
 
-        String privateKey = PRIVATE_KEY_PREFIX + Base64.encode(cryptographyStandard1PrivateKeyBytes) + PRIVATE_KEY_SUFFIX;
-        String publicKey = PUBLIC_KEY_PREFIX + Base64.encode(keyPair.getPublic().getEncoded()) + PUBLIC_KEY_SUFFIX;
+        String privateKey = PRIVATE_KEY_PREFIX;
+        String encodedPriKey = Base64.encode(cryptographyStandard1PrivateKeyBytes);
+        for (int i = 0; i < encodedPriKey.length(); i += 64)
+            privateKey += "\n" + encodedPriKey.substring(i, Math.min(i + 64, encodedPriKey.length()));
+        privateKey += PRIVATE_KEY_SUFFIX;
+        String publicKey = PUBLIC_KEY_PREFIX;
+        String encodedPubKey = Base64.encode(keyPair.getPublic().getEncoded());
+        for (int i = 0; i < encodedPubKey.length(); i += 64)
+            publicKey += "\n" + encodedPubKey.substring(i, Math.min(i + 64, encodedPubKey.length()));
+        publicKey += PUBLIC_KEY_SUFFIX;
 
         return new RSAKeyPair(privateKey, publicKey);
 
