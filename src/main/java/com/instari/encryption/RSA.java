@@ -57,8 +57,17 @@ public class RSA {
         RSAPrivateKeyStructure cryptographyStandard1PrivateKey = RSAPrivateKeyStructure.getInstance(pki.getPrivateKey());
         byte[] cryptographyStandard1PrivateKeyBytes = cryptographyStandard1PrivateKey.getEncoded();
 
-        String privateKey = PRIVATE_KEY_PREFIX + Base64.encode(cryptographyStandard1PrivateKeyBytes) + PRIVATE_KEY_SUFFIX;
-        String publicKey = PUBLIC_KEY_PREFIX + Base64.encode(keyPair.getPublic().getEncoded()) + PUBLIC_KEY_SUFFIX;
+        String privateKey = PRIVATE_KEY_PREFIX;
+        String encodedPriKey = Base64.encode(cryptographyStandard1PrivateKeyBytes);
+        for (int i = 0; i < encodedPriKey.length(); i += 64)
+            privateKey += encodedPriKey.substring(i, Math.min(i + 64, encodedPriKey.length()));
+        privateKey += PRIVATE_KEY_SUFFIX;
+
+        String publicKey = PUBLIC_KEY_PREFIX;
+        String encodedPubKey = Base64.encode(keyPair.getPublic().getEncoded());
+        for (int i = 0; i < encodedPubKey.length(); i += 64)
+            publicKey += encodedPubKey.substring(i, Math.min(i + 64, encodedPubKey.length()));
+        publicKey += PUBLIC_KEY_SUFFIX;
 
         return new RSAKeyPair(privateKey, publicKey);
 
