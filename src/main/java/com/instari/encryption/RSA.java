@@ -25,7 +25,7 @@ import java.security.spec.X509EncodedKeySpec;
 public class RSA {
 
     private static final String ALGORITHM = "RSA";
-    private static final String CIPHER_ALGORITHM = "RSA/ECB/PKCS1Padding";
+    private static final String CIPHER_ALGORITHM = "RSA/ECB/OAEPWithSHA-1AndMGF1Padding";
 
     private static final String PRIVATE_KEY_PREFIX = "-----BEGIN RSA PRIVATE KEY-----";
     private static final String PRIVATE_KEY_SUFFIX = "\n-----END RSA PRIVATE KEY-----\n";
